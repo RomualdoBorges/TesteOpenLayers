@@ -10,6 +10,8 @@ import { Fill, Stroke, Style } from 'ol/style';
 import ToolsMap from '../../layout/ToolsMap';
 import { XYZ } from 'ol/source';
 import CustomLayersWms from '../../layout/CustomLayerWms';
+import CustomSearchLayer from '../../layout/CustomSearchLayer';
+import { MarkerMapProvider } from '../../../context/MarkerMapContext';
 
 const CustomMap: React.FC = () => {
   const [map, setMap] = useState<Map | null>(null);
@@ -21,7 +23,6 @@ const CustomMap: React.FC = () => {
     const projection = getProjection('EPSG:3857');
 
     if (projection) {
-      // Cria a fonte e a camada vetorial
       const source = new VectorSource();
       setVectorSource(source);
 
@@ -79,11 +80,14 @@ const CustomMap: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <div id="map" style={{ width: '100%', height: '100vh' }}></div>
-      {map && vectorSource && <ToolsMap map={map} vectorSource={vectorSource} />}
-      {map && <CustomLayersWms map={map} />}
-    </div>
+    <MarkerMapProvider map={map} vectorSource={vectorSource}>
+      <div>
+        <div id="map" style={{ width: '100%', height: '100vh' }}></div>
+        {map && vectorSource && <ToolsMap map={map} vectorSource={vectorSource} />}
+        {map && <CustomLayersWms map={map} />}
+        {map && <CustomSearchLayer />}
+      </div>
+    </MarkerMapProvider>
   );
 };
 
