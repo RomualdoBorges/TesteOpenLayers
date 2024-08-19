@@ -42,7 +42,7 @@ describe('Componente WMSLayer', () => {
     expect(TileLayer).toHaveBeenCalled();
     expect(TileWMS).toHaveBeenCalledWith({
       url: 'http://example.com/wms',
-      params: { LAYERS: 'exampleLayer' },
+      params: { LAYERS: 'exampleLayer', TILED: true },
       serverType: 'geoserver',
       transition: 0,
     });

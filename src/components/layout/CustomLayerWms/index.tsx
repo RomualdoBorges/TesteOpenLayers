@@ -236,7 +236,7 @@ const CustomLayersWms: React.FC<CustomLayersWmsProps> = ({ map }) => {
               map={map}
               url={layer.url}
               layers={layer.layer}
-              // params={layer.params}
+              params={layer.params}
               visible={activeLayers.has(layer.id)}
             />
           ),
