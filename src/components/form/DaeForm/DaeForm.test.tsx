@@ -13,7 +13,7 @@ vi.mock('../../../services/SearchService/searchService', () => ({
   searchDae: vi.fn(),
 }));
 
-describe('DaeForm Component', () => {
+describe('Componente DaeForm', () => {
   const mockAddMarker = vi.fn();
   const mockClearMarkers = vi.fn();
 
@@ -40,13 +40,13 @@ describe('DaeForm Component', () => {
     vi.clearAllMocks();
   });
 
-  it('should render the DaeForm component correctly', () => {
+  it('deve renderizar o componente DaeForm corretamente', () => {
     render(<DaeForm />);
     expect(screen.getByPlaceholderText('Digite o código DAE')).toBeInTheDocument();
     expect(screen.getByLabelText('search')).toBeInTheDocument();
   });
 
-  it('should disable input and show delete button when a marker is added', async () => {
+  it('deve desabilitar a entrada e mostrar o botão de exclusão quando um marcador é adicionado', async () => {
     render(<DaeForm />);
 
     const input = screen.getByPlaceholderText('Digite o código DAE');
@@ -62,7 +62,7 @@ describe('DaeForm Component', () => {
     expect(screen.getByLabelText('delete')).toBeInTheDocument();
   });
 
-  it('should show an error message when no data is found', async () => {
+  it('mensagem de erro quando nenhum dado for encontrado', async () => {
     // Simula a resposta da função searchDae com um array de features vazio
     (searchDae as unknown as MockInstance).mockResolvedValue({
       type: {
@@ -87,7 +87,7 @@ describe('DaeForm Component', () => {
     expect(input).toHaveValue('');
   });
 
-  it('should clear the marker and reset the form when the delete button is clicked', async () => {
+  it('deve limpar o marcador e redefinir o formulário quando o botão excluir for clicado', async () => {
     render(<DaeForm />);
 
     const input = screen.getByPlaceholderText('Digite o código DAE');
