@@ -23,7 +23,7 @@ Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock });
 
 describe('Instancia Axios', () => {
   it('deve ter o baseURL e os cabeçalhos corretos', () => {
-    expect(api.defaults.baseURL).toBe(import.meta.env.VITE_REACT_APP_API_URL);
+    expect(api.defaults.baseURL).toBe(import.meta.env.VITE_API_URL);
     expect(api.defaults.headers['Content-Type']).toBe('application/json');
   });
 

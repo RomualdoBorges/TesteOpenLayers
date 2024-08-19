@@ -19,7 +19,7 @@ const AddressForm: React.FC = () => {
   const [showError, setShowError] = useState(false);
   const [markerAdded, setMarkerAdded] = useState(false);
   const [inputsDisabled, setInputsDisabled] = useState(false);
-  const { addMarker, clearMarkers } = useMarkerMap(); // Adicionar a função clearMarkers
+  const { addMarker, clearMarkers } = useMarkerMap();
 
   const endereco = watch('endereco');
   const numero = watch('numero');
@@ -49,7 +49,7 @@ const AddressForm: React.FC = () => {
       const response: EnderecoResponse = await searchEndereco(data.endereco, data.numero);
       addMarker(response.type.features[0].geometry.coordinates);
       setMarkerAdded(true);
-      setInputsDisabled(true); // Desabilitar os inputs após encontrar o endereço
+      setInputsDisabled(true);
     } catch (error) {
       setShowError(true);
       setValue('endereco', '');
