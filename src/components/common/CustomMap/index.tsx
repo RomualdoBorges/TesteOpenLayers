@@ -12,6 +12,8 @@ import { XYZ } from 'ol/source';
 import CustomLayersWms from '../../layout/CustomLayerWms';
 import CustomSearchLayer from '../../layout/CustomSearchLayer';
 import { MarkerMapProvider } from '../../../context/MarkerMapContext';
+import { InventoryProvider } from '../../../context/InventoryContext';
+import InventoryWindow from '../../layout/InventoryWindow';
 
 const CustomMap: React.FC = () => {
   const [map, setMap] = useState<Map | null>(null);
@@ -80,14 +82,17 @@ const CustomMap: React.FC = () => {
   }, []);
 
   return (
-    <MarkerMapProvider map={map} vectorSource={vectorSource}>
-      <div>
-        <div id="map" style={{ width: '100%', height: '100vh' }}></div>
-        {map && vectorSource && <ToolsMap map={map} vectorSource={vectorSource} />}
-        {map && <CustomLayersWms map={map} />}
-        {map && <CustomSearchLayer />}
-      </div>
-    </MarkerMapProvider>
+    <InventoryProvider>
+      <MarkerMapProvider map={map} vectorSource={vectorSource}>
+        <div>
+          <div id="map" style={{ width: '100%', height: '100vh' }}></div>
+          {map && vectorSource && <ToolsMap map={map} vectorSource={vectorSource} />}
+          {map && <CustomLayersWms map={map} />}
+          {map && <CustomSearchLayer />}
+          {map && <InventoryWindow />}
+        </div>
+      </MarkerMapProvider>
+    </InventoryProvider>
   );
 };
 

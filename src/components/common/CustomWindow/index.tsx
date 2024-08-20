@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/system';
 
@@ -43,25 +43,34 @@ interface CustomWindowProps {
   handleWindowClose?: () => void;
   title?: string;
   icon?: ReactNode;
+  loading?: boolean;
 }
 
-const CustomWindow: React.FC<CustomWindowProps> = ({ children, handleWindowClose, title, icon }) => {
+const CustomWindow: React.FC<CustomWindowProps> = ({ children, handleWindowClose, title, icon, loading }) => {
   return (
     <Container>
-      <TitleContainer>
-        <Box display={'flex'} alignItems={'center'} gap={'8px'}>
-          {icon}
-          <Typography color={'#004A6E'} fontWeight={'bold'}>
-            {title}
-          </Typography>
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+          <CircularProgress />
         </Box>
+      ) : (
+        <>
+          <TitleContainer>
+            <Box display={'flex'} alignItems={'center'} gap={'8px'}>
+              {icon}
+              <Typography color={'#004A6E'} fontWeight={'bold'}>
+                {title}
+              </Typography>
+            </Box>
 
-        <IconButton onClick={handleWindowClose}>
-          <CloseIcon />
-        </IconButton>
-      </TitleContainer>
+            <IconButton onClick={handleWindowClose}>
+              <CloseIcon />
+            </IconButton>
+          </TitleContainer>
 
-      {children}
+          {children}
+        </>
+      )}
     </Container>
   );
 };

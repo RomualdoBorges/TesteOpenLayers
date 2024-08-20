@@ -4,6 +4,7 @@ import TileWMS from 'ol/source/TileWMS';
 import { Map as OLMap } from 'ol';
 import { unByKey } from 'ol/Observable';
 import { MapBrowserEvent } from 'ol';
+import { useInventory } from '../../../hooks/useInventory';
 
 interface WMSLayerProps {
   map: OLMap;
@@ -14,6 +15,8 @@ interface WMSLayerProps {
 }
 
 const WMSLayer: React.FC<WMSLayerProps> = ({ map, url, layers, params = {}, visible = true }) => {
+  const { setOpen, setSetor, setQuadra, setLote } = useInventory();
+
   useEffect(() => {
     const wmsSource = new TileWMS({
       url,
@@ -31,7 +34,7 @@ const WMSLayer: React.FC<WMSLayerProps> = ({ map, url, layers, params = {}, visi
 
     const handleMapClick = (event: MapBrowserEvent<UIEvent>) => {
       if (!layer.getVisible()) {
-        return; // Ignora o clique se a camada não estiver visível
+        return;
       }
 
       const viewResolution = map.getView().getResolution();
@@ -43,7 +46,17 @@ const WMSLayer: React.FC<WMSLayerProps> = ({ map, url, layers, params = {}, visi
         fetch(url)
           .then((response) => response.json())
           .then((data) => {
-            console.log('Dados da camada:', data);
+            const id = data.features[0].id;
+            const setor = data.features[0].properties.zona;
+            const quadra = data.features[0].properties.quadra;
+            const lote = data.features[0].properties.lote;
+
+            if (id.includes('ligacoes_custom')) {
+              setOpen(true);
+              setSetor(setor);
+              setQuadra(quadra);
+              setLote(lote);
+            }
           })
           .catch((error) => {
             console.error('Erro ao buscar dados da camada:', error);
@@ -57,7 +70,7 @@ const WMSLayer: React.FC<WMSLayerProps> = ({ map, url, layers, params = {}, visi
       unByKey(clickListenerKey);
       map.removeLayer(layer);
     };
-  }, [map, url, layers, params, visible]);
+  }, [map, url, layers, params, visible, setOpen, setSetor, setQuadra, setLote]);
 
   return null;
 };

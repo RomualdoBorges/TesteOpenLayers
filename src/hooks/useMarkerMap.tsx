@@ -4,7 +4,7 @@ import { MarkerMapContext, MarkerMapContextType } from '../context/MarkerMapCont
 export const useMarkerMap = (): MarkerMapContextType => {
   const context = useContext(MarkerMapContext);
   if (!context) {
-    throw new Error('useMap must be used within a MapProvider');
+    throw new Error('useMarkerMap must be used within a MapProvider');
   }
   return context;
 };
